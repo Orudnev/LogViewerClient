@@ -5,29 +5,21 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import App from '../App'
 import { Link } from 'react-router-dom'
+import StorageMain from '../components/StorageMain';
 
-/*
-const Root = ({ store }) => (
-  <Provider store={store}>
-    <Router>
-      <Route path="/:filter?" component={App} />
-    </Router>
-  </Provider>
-)
-*/
 
 const routes = [
   { path: '/',
     exact: true,
-    //sidebar: () => <div>home sidebar!</div>,
-    main: () => <h2>Home main</h2>
+    sidebar: () => <div>home sidebar!</div>,
+    main: () => <StorageMain/>
   },
   { path: '/bubblegum',
-    //sidebar: () => <div>bubblegum sidebar!</div>,
-    main: () => <h2>Bubblegum mainnn</h2>
+    sidebar: () => <div>bubblegum sidebar!</div>,
+    main: () => <h2>Bubblegum main</h2>
   },
   { path: '/shoelaces',
-    //sidebar: () => <div>shoelaces sidebar!</div>,
+    sidebar: () => <div>shoelaces sidebar!</div>,
     main: () => <h2>Shoelaces main</h2>
   }
 ]
@@ -69,7 +61,13 @@ const Root = ({ store }) => (
                   />
               <Route path="/bubblegum" component = {() => (
               <ul style={{ listStyleType: 'none', padding: 0 }}>
-                <li><Link to="/">Home</Link></li>
+                <li><Link to="/">Home1</Link></li>
+                <li><Link to="/shoelaces">Shoelaces</Link></li>
+              </ul>)}
+              />
+              <Route path="/shoelaces" component = {() => (
+              <ul style={{ listStyleType: 'none', padding: 0 }}>
+                <li><Link to="/">Home1</Link></li>
                 <li><Link to="/shoelaces">Shoelaces</Link></li>
               </ul>)}
               />
