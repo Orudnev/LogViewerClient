@@ -4,8 +4,9 @@ export const ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS = 'ACTTYPE_STORECLOUD_REQUES
 export const ACTTYPE_STORECLOUD_GETALLITEMS = 'ACTTYPE_STORECLOUD_GETALLITEMS';
 
 
-export function actStoreCloud_GetAllItems()
+export function actStoreCloudGetAllItems(bRefresh)
 {
+    //console.log('actStoreCloudGetAllItems');
     var url = "https://script.google.com/macros/s/AKfycbyjRdA18bzdVoNSkQyeu-mbE3CfM83Qng48ynNGziMEzINAe2I/exec?method=getAllRows";
     return dispatch=>{
         dispatch({

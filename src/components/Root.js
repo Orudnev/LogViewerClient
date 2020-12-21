@@ -5,14 +5,14 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import App from '../App'
 import { Link } from 'react-router-dom'
-import StorageMain from '../components/StorageMain';
-
+//import StorageMain from '../components/StorageMain';
+import StorageCloudContainer from '../containers/Storage1container';
 
 const routes = [
   { path: '/',
     exact: true,
     sidebar: () => <div>home sidebar!</div>,
-    main: () => <StorageMain/>
+    main: () => <StorageCloudContainer/>
   },
   { path: '/bubblegum',
     sidebar: () => <div>bubblegum sidebar!</div>,

@@ -4,19 +4,18 @@ import axios from 'axios';
 class StorageMainPage extends React.Component{
     constructor(props){
         super(props); 
-        this.state = {
-            rows:[]
-        };
     }
 
     componentDidMount(){
-        axios.get("https://script.google.com/macros/s/AKfycbyjRdA18bzdVoNSkQyeu-mbE3CfM83Qng48ynNGziMEzINAe2I/exec?method=getAllRows")
-        .then(response=>response.data.result)
-        .then(allRows=>this.setState({rows:allRows}));
+        //axios.get("https://script.google.com/macros/s/AKfycbyjRdA18bzdVoNSkQyeu-mbE3CfM83Qng48ynNGziMEzINAe2I/exec?method=getAllRows")
+        //.then(response=>response.data.result)
+        //.then(allRows=>this.setState({rows:allRows}));
+        this.props.requestRows(true);
     }
 
     renderTableData(){
-        return this.state.rows.map((row,index) => {
+        console.log('renderTableData');
+        return this.props.Items.map((row,index) => {
             let {Container,Item} = row;
             return(
                 <tr key={index}>
@@ -27,6 +26,7 @@ class StorageMainPage extends React.Component{
     }
 
     render() {
+        console.log('render');
         return(
                 <div>
                   <h1>All Rows</h1>
