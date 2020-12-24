@@ -10,6 +10,7 @@ function addPromiseThunkSupport(store) {
     const dispatch = store.dispatch;
     
     return action => {
+        console.log('1111');
         if (typeof action.then === 'function') {
             return action.then(dispatch);
         } else if (typeof action === 'function') {

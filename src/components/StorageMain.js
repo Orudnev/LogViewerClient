@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 class StorageMainPage extends React.Component{
     constructor(props){
@@ -10,33 +11,44 @@ class StorageMainPage extends React.Component{
         //axios.get("https://script.google.com/macros/s/AKfycbyjRdA18bzdVoNSkQyeu-mbE3CfM83Qng48ynNGziMEzINAe2I/exec?method=getAllRows")
         //.then(response=>response.data.result)
         //.then(allRows=>this.setState({rows:allRows}));
-        this.props.requestRows(true);
+        this.props.requestRows(false);
     }
 
     renderTableData(){
-        console.log('renderTableData');
-        return this.props.Items.map((row,index) => {
-            let {Container,Item} = row;
-            return(
-                <tr key={index}>
-                    <td>{Container}</td>
-                    <td>{Item}</td>
-                </tr>);
-        });
+            return this.props.Items.map((row,index) => {
+                let {Container,Item} = row;
+                return(
+                    <tr key={index}>
+                        <td>{Container}</td>
+                        <td>{Item}</td>
+                    </tr>);
+            });
     }
+
+
 
     render() {
         console.log('render');
-        return(
-                <div>
-                  <h1>All Rows</h1>
-                  <table id='tblItems'>
-                    <tbody>
-                        {this.renderTableData()}
-                    </tbody>
-                  </table>
-                </div>
-              );
+        if(this.props.Items != null)
+        {
+            return(
+                    <div>
+                    <Link to="/storecloud/editrow">
+                        <button type='button'>
+                            Edit
+                        </button>
+                    </Link>
+                    <table id='tblItems'>
+                        <tbody>
+                            {this.renderTableData()}
+                        </tbody>
+                    </table>
+                    </div>
+                );
+        } else
+        {
+            return (<h2>Loading...</h2>);
+        }
     }
 
 

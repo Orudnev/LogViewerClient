@@ -5,7 +5,6 @@ import storageMainPg from '../components/StorageMain';
 
 function mapStateToProps(state)
 {
-    console.log('mapStateToProps');
     return{
         Items: state.cloudStoreItems
     }

@@ -10,13 +10,19 @@ import StorageCloudContainer from '../containers/Storage1container';
 
 const routes = [
   { path: '/',
-    exact: true,
+    exact: true,    
     sidebar: () => <div>home sidebar!</div>,
+    main: () => <div>Home page</div>
+  },
+  { path: '/storecloud',
+    exact:true,
+    sidebar: () => <div>bubblegum sidebar!</div>,
     main: () => <StorageCloudContainer/>
   },
-  { path: '/bubblegum',
-    sidebar: () => <div>bubblegum sidebar!</div>,
-    main: () => <h2>Bubblegum main</h2>
+  {
+    path:'/storecloud/editrow',
+    sidebar: () => <div>blablabla</div>,
+    main:()=><h2>Edit table row</h2> 
   },
   { path: '/shoelaces',
     sidebar: () => <div>shoelaces sidebar!</div>,
@@ -43,23 +49,23 @@ const Root = ({ store }) => (
         <div style={{
           padding: '10px',
           width: '40%',
-          background: '#f0f0f0'
+          background: '#fFFFFF'
         }}>
           <SplitPane
                 split="vertical"
-                minSize={100}
-                defaultSize={100}
+                minSize={10}
+                defaultSize={80}
                 resizerStyle={styles1}
           > 
           <div>
               <Route exact path="/" component = {() => (
                   <ul style={{ listStyleType: 'none', padding: 0 }}>
                     <li><Link to="/">Home</Link></li>
-                    <li><Link to="/bubblegum">Bubblegum</Link></li>
+                    <li><Link to="/storecloud">StoreCloud</Link></li>
                     <li><Link to="/shoelaces">Shoelaces</Link></li>
                   </ul>)}
                   />
-              <Route path="/bubblegum" component = {() => (
+              <Route path="/storecloud" component = {() => (
               <ul style={{ listStyleType: 'none', padding: 0 }}>
                 <li><Link to="/">Home1</Link></li>
                 <li><Link to="/shoelaces">Shoelaces</Link></li>
