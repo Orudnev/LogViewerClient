@@ -25,8 +25,10 @@ class StorageMainPage extends React.Component{
             });
     }
 
-
-
+    handleRefreshButtonClick(){
+        this.props.requestRows(true);
+    }
+ 
     render() {
         console.log('render');
         if(this.props.Items != null)
@@ -34,10 +36,13 @@ class StorageMainPage extends React.Component{
             return(
                     <div>
                     <Link to="/storecloud/editrow">
-                        <button type='button'>
+                        <button type='button'  >
                             Edit
                         </button>
                     </Link>
+                    <button type='button' onClick={(e) => this.handleRefreshButtonClick(e)}>
+                        Refresh
+                    </button>
                     <table id='tblItems'>
                         <tbody>
                             {this.renderTableData()}
