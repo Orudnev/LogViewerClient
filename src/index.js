@@ -4,13 +4,12 @@ import { createStore } from 'redux'
 import reducer from './reducers'
 import Root from './components/Root'
 import * as serviceWorker from './serviceWorker';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function addPromiseThunkSupport(store) {
     const dispatch = store.dispatch;
     
     return action => {
-        console.log('1111');
         if (typeof action.then === 'function') {
             return action.then(dispatch);
         } else if (typeof action === 'function') {

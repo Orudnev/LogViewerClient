@@ -2,11 +2,11 @@ import axios from 'axios';
 
 export const ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS = 'ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS';
 export const ACTTYPE_STORECLOUD_GETALLITEMS = 'ACTTYPE_STORECLOUD_GETALLITEMS';
+export const ACTTYPE_STORECLOUD_FILTERITEMS = 'ACTTYPE_STORECLOUD_FILTERITEMS';
 
 const LSTORAGE_KEY = 'actStoreCloudGetAllItems';
 export function actStoreCloudGetAllItems(bRefresh)
 {
-    console.log("actStoreCloudGetAllItems");
     if(!bRefresh)
     {
         if(localStorage[LSTORAGE_KEY])
@@ -33,4 +33,23 @@ export function actStoreCloudGetAllItems(bRefresh)
                 payload});
             });
     }   
+}
+
+export function actStoreCloudFilterItems(fltCriteria)
+{
+    if(fltCriteria){
+        var allRows = JSON.parse(localStorage[LSTORAGE_KEY]);
+        console.log(allRows);
+        var payload = allRows.filter((row)=>row.Item.toLowerCase().includes(fltCriteria.toLowerCase()));
+        return  {
+            type:ACTTYPE_STORECLOUD_GETALLITEMS,
+            payload
+        };
+    } else{
+        payload = JSON.parse(localStorage[LSTORAGE_KEY]);
+        return  {
+            type:ACTTYPE_STORECLOUD_GETALLITEMS,
+            payload
+        };
+    }
 }

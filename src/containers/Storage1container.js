@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import * as acts from '../actions';
 import {actStoreCloudGetAllItems} from '../actions';
+import {actStoreCloudFilterItems} from '../actions';
 import storageMainPg from '../components/StorageMain';
 
 function mapStateToProps(state)
@@ -16,7 +17,11 @@ function mapDispatchToProps(dispatch)
         requestRows: 
             (bRefresh) =>{
                 dispatch(actStoreCloudGetAllItems(bRefresh));
-            } 
+            },
+        filterRows:
+            (fltCriteria) =>{
+                dispatch(actStoreCloudFilterItems(fltCriteria));
+            }     
     };
 }
 
