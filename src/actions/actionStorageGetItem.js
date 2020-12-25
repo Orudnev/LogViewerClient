@@ -3,6 +3,7 @@ import axios from 'axios';
 export const ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS = 'ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS';
 export const ACTTYPE_STORECLOUD_GETALLITEMS = 'ACTTYPE_STORECLOUD_GETALLITEMS';
 export const ACTTYPE_STORECLOUD_FILTERITEMS = 'ACTTYPE_STORECLOUD_FILTERITEMS';
+export const ACTTYPE_STORECLOUD_UPDATECONTAINERLIST = 'ACTTYPE_STORECLOUD_UPDATECONTAINERLIST';
 
 const LSTORAGE_KEY = 'actStoreCloudGetAllItems';
 export function actStoreCloudGetAllItems(bRefresh)
@@ -12,6 +13,7 @@ export function actStoreCloudGetAllItems(bRefresh)
         if(localStorage[LSTORAGE_KEY])
         {
             var _payload = JSON.parse(localStorage[LSTORAGE_KEY]);
+            getContainerList();
             return  {
                     type:ACTTYPE_STORECLOUD_GETALLITEMS,
                     payload:_payload
@@ -28,12 +30,28 @@ export function actStoreCloudGetAllItems(bRefresh)
         .then(response=>response.data.result)
         .then((payload)=>{
                 localStorage[LSTORAGE_KEY] = JSON.stringify(payload);
+                getContainerList();
                 dispatch({
                 type:ACTTYPE_STORECLOUD_GETALLITEMS,
                 payload});
             });
     }   
 }
+
+function getContainerList()
+{
+    var allRows = JSON.parse(localStorage[LSTORAGE_KEY]);
+    var containers = [];
+    allRows.map((itemRow)=>{
+        var sr = containers.filter(cnt=>cnt==itemRow.Container);
+        if (sr.length == 0)
+        {
+           containers.push(itemRow.Container);     
+        }
+    });
+    console.log(containers);
+}
+
 
 export function actStoreCloudFilterItems(fltCriteria)
 {
