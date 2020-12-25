@@ -64,7 +64,7 @@ class StorageMainPage extends React.Component{
             return(
                     <div>
                     <div className="btn-group" role="group" >
-                        <Link to="/storecloud/editrow">
+                        <Link to="/storecloud/addrow">
                             <Button type='button' >
                                 <PlusIcon />
                             </Button>

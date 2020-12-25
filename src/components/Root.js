@@ -21,8 +21,11 @@ const routes = [
   },
   {
     path:'/storecloud/editrow',
-    sidebar: () => <div>blablabla</div>,
     main:()=><h2>Edit table row</h2> 
+  },
+  {
+    path:'/storecloud/addrow',
+    main:()=><h2>Add table row</h2> 
   },
   { path: '/shoelaces',
     sidebar: () => <div>shoelaces sidebar!</div>,
