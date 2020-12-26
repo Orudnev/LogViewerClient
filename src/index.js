@@ -5,6 +5,9 @@ import reducer from './reducers'
 import Root from './components/Root'
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import $ from 'jquery';
+import Popper from 'popper.js';
 
 function addPromiseThunkSupport(store) {
     const dispatch = store.dispatch;

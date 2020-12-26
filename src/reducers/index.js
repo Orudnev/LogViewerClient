@@ -1,10 +1,9 @@
 import {combineReducers} from 'redux';
 
-import cloudStoreItems from './reducerStorageCloud';
-
+import cloudStore from './reducerStorageCloudItems';
 const reducer = combineReducers(
     {
-        cloudStoreItems
+        cloudStore,
     });
 
 export default reducer;    

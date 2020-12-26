@@ -5,7 +5,7 @@ export const ACTTYPE_STORECLOUD_GETALLITEMS = 'ACTTYPE_STORECLOUD_GETALLITEMS';
 export const ACTTYPE_STORECLOUD_FILTERITEMS = 'ACTTYPE_STORECLOUD_FILTERITEMS';
 export const ACTTYPE_STORECLOUD_UPDATECONTAINERLIST = 'ACTTYPE_STORECLOUD_UPDATECONTAINERLIST';
 
-const LSTORAGE_KEY = 'actStoreCloudGetAllItems';
+export const LSTORAGE_KEY = 'actStoreCloudGetAllItems';
 export function actStoreCloudGetAllItems(bRefresh)
 {
     if(!bRefresh)
@@ -13,7 +13,6 @@ export function actStoreCloudGetAllItems(bRefresh)
         if(localStorage[LSTORAGE_KEY])
         {
             var _payload = JSON.parse(localStorage[LSTORAGE_KEY]);
-            getContainerList();
             return  {
                     type:ACTTYPE_STORECLOUD_GETALLITEMS,
                     payload:_payload
@@ -30,7 +29,6 @@ export function actStoreCloudGetAllItems(bRefresh)
         .then(response=>response.data.result)
         .then((payload)=>{
                 localStorage[LSTORAGE_KEY] = JSON.stringify(payload);
-                getContainerList();
                 dispatch({
                 type:ACTTYPE_STORECLOUD_GETALLITEMS,
                 payload});
@@ -38,27 +36,18 @@ export function actStoreCloudGetAllItems(bRefresh)
     }   
 }
 
-function getContainerList()
-{
-    var allRows = JSON.parse(localStorage[LSTORAGE_KEY]);
-    var containers = [];
-    allRows.map((itemRow)=>{
-        var sr = containers.filter(cnt=>cnt==itemRow.Container);
-        if (sr.length == 0)
-        {
-           containers.push(itemRow.Container);     
-        }
-    });
-    console.log(containers);
-}
 
 
 export function actStoreCloudFilterItems(fltCriteria)
 {
-    if(fltCriteria){
+    if(fltCriteria.itemFilter || fltCriteria.containerFilter){
         var allRows = JSON.parse(localStorage[LSTORAGE_KEY]);
-        console.log(allRows);
-        var payload = allRows.filter((row)=>row.Item.toLowerCase().includes(fltCriteria.toLowerCase()));
+        var payload = allRows.filter((row)=>{
+            var b1 = true; var b2 = true;
+            if (fltCriteria.itemFilter) b1 = row.Item.toLowerCase().includes(fltCriteria.itemFilter.toLowerCase());
+            if (fltCriteria.containerFilter) b2 = row.Container == fltCriteria.containerFilter;
+            return b1 && b2;     
+        });
         return  {
             type:ACTTYPE_STORECLOUD_GETALLITEMS,
             payload

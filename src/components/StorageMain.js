@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {Table} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
@@ -7,8 +6,8 @@ import {InputGroup} from 'react-bootstrap';
 import {FormControl} from 'react-bootstrap';
 import {CancelIcon}  from './icons';
 import {PlusIcon}  from './icons';
-import {PencilIcon}  from './icons';
 import {RefreshIcon}  from './icons';
+import DropdownList from './DropdownList';
 
 const space10 = {
    width: "10px"
@@ -18,19 +17,17 @@ class StorageMainPage extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            filtertCriteria:""
+                containerFilter:null,
+                itemFilter:""
         } 
     }
 
     componentDidMount(){
-        //axios.get("https://script.google.com/macros/s/AKfycbyjRdA18bzdVoNSkQyeu-mbE3CfM83Qng48ynNGziMEzINAe2I/exec?method=getAllRows")
-        //.then(response=>response.data.result)
-        //.then(allRows=>this.setState({rows:allRows}));
         this.props.requestRows(false);
     }
 
     renderTableData(){
-            return this.props.Items.map((row,index) => {
+            return this.props.CloudStore.Items.map((row,index) => {
                 let {Container,Item} = row;
                 return(
                     <tr key={index}>
@@ -44,10 +41,10 @@ class StorageMainPage extends React.Component{
         this.props.requestRows(true);
     }
 
-    handleChangeFilter(e)
-    {
-        var fltCriteria = e.target.value;
-        this.setState({filterCriteria:fltCriteria});
+    handleChangeFilter(e){
+        var itemFilter = e.target.value;
+        this.setState({itemFilter});
+        var fltCriteria = {itemFilter,containerFilter:this.state.containerFilter}; 
         this.props.filterRows(fltCriteria);
     }
 
@@ -57,9 +54,16 @@ class StorageMainPage extends React.Component{
         this.setState({filterCriteria:fltCriteria});
         this.props.filterRows(fltCriteria);    
     }
+
+    handleContainerFilterChange(container){
+
+        this.setState({containerFilter:container});
+        var fltCriteria = {itemFilter:this.state.itemFilter,containerFilter:container}; 
+        this.props.filterRows(fltCriteria);        
+    }
  
     render() {
-        if(this.props.Items != null)
+        if(this.props.CloudStore.Items != null)
         {
             return(
                     <div>
@@ -77,14 +81,16 @@ class StorageMainPage extends React.Component{
                     <Table id='tblItems' striped bordered hover size='sm'>
                         <thead>
                             <tr>
-                                <th key="0">Контейнер</th>
+                                <th key="0">
+                                    <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} />
+                                </th>
                                 <th key="1">
                                     <InputGroup>
-                                        <Button className="btn-sm btn-danger" onClick={(e)=>this.handleClearFilterButtonClick()} disabled={!this.state.filterCriteria} >
+                                        <Button className="btn-sm btn-danger" onClick={(e)=>this.handleClearFilterButtonClick()} disabled={!this.state.itemFilter} >
                                             <CancelIcon />   
                                         </Button>
                                         <span style={space10}></span>
-                                        <FormControl placeholder="filter" aria-describedby="basic-addon1" onChange={(e)=>this.handleChangeFilter(e)} value={this.state.filterCriteria} />
+                                        <FormControl placeholder="filter" aria-describedby="basic-addon1" onChange={(e)=>this.handleChangeFilter(e)} value={this.state.itemFilter} />
                                     </InputGroup>
                                 </th>
                             </tr>

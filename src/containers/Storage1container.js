@@ -7,8 +7,8 @@ import storageMainPg from '../components/StorageMain';
 function mapStateToProps(state)
 {
     return{
-        Items: state.cloudStoreItems
-    }
+        CloudStore: state.cloudStore
+        }
 }
 
 function mapDispatchToProps(dispatch)
