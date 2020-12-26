@@ -45,7 +45,7 @@ class DropDownList extends React.Component{
     render()
     {
         return (
-        <DropdownButton
+        <DropdownButton variant="light" className="border"
         title= {this.state.selectedItemStr}
         onSelect = {(index)=>this.onItemSelected(index)}
         >
