@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import SplitPane from 'react-split-pane'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import history from '../history';
+
 import App from '../App'
 import { Link } from 'react-router-dom'
-//import StorageMain from '../components/StorageMain';
-import StorageCloudContainer from '../containers/Storage1container';
+import StorageCloudContainer from '../containers/StorageCloudMain';
+import StorageCloudAddRow from '../containers/StorageCloudAddRow';
+
 
 const routes = [
   { path: '/',
@@ -25,7 +28,7 @@ const routes = [
   },
   {
     path:'/storecloud/addrow',
-    main:()=><h2>Add table row</h2> 
+    main:()=><StorageCloudAddRow/> 
   },
   { path: '/shoelaces',
     sidebar: () => <div>shoelaces sidebar!</div>,
@@ -47,7 +50,7 @@ const styles1 = {
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <Router>
+    <Router history={history}>
     <div style={{ display: 'flex' }}>
         <div style={{
           padding: '10px',

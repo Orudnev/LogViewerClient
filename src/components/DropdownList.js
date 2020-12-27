@@ -5,11 +5,14 @@ import Dropdown from 'react-bootstrap/Dropdown'
 const allItemsCaption = "Все элементы";
 
 class DropDownList extends React.Component{
+     
     constructor(props){
         super(props);
+        this.showAllItemIndexCorrection = 0;
+        if(this.props.showAllElementsItem) this.showAllItemIndexCorrection = 1;
         this.state = {
-            selectedIndex:0,
-            selectedItemStr:allItemsCaption
+            selectedIndex:props.showAllElementsItem == 1?0:-1,
+            selectedItemStr: props.showAllElementsItem == 1?allItemsCaption:""
         } 
     }
 
@@ -20,9 +23,10 @@ class DropDownList extends React.Component{
 
     renderDropDownItems()
     {
+        console.log(this.props.containers);
         return this.props.containers.map((row,index) => {
             return(
-            <Dropdown.Item eventKey={index+1}>{row}</Dropdown.Item>)
+            <Dropdown.Item eventKey={index+this.showAllItemIndexCorrection} key="index+this.showAllItemIndexCorrection" >{row}</Dropdown.Item>)
         });
     }
 
@@ -31,15 +35,28 @@ class DropDownList extends React.Component{
         if(this.state.selectedIndex == index){
             return;
         }
-        if(index==0)
-        {
-            this.setState({selectedIndex:0,selectedItemStr:allItemsCaption});
-            this.props.onItemSelected(null);
-            return;       
+        
+        if(this.props.showAllElementsItem){
+            if(index==0){
+                this.setState({selectedIndex:0,selectedItemStr:allItemsCaption});
+                this.props.onItemSelected(null);
+                return;       
+            }
         }
-        var selectedItem = this.props.containers[index-1];
+        var selectedItem = this.props.containers[index-this.showAllItemIndexCorrection];
         this.setState({selectedIndex:index,selectedItemStr:selectedItem});
         this.props.onItemSelected(selectedItem);
+        console.log(selectedItem);
+    }
+
+    renderAllElementsItem()
+    {
+        if(this.props.showAllElementsItem)
+        {
+            return (            
+                <Dropdown.Item eventKey="0">{allItemsCaption}</Dropdown.Item>
+            );
+        }
     }
 
     render()
@@ -49,33 +66,12 @@ class DropDownList extends React.Component{
         title= {this.state.selectedItemStr}
         onSelect = {(index)=>this.onItemSelected(index)}
         >
-            <Dropdown.Item eventKey="0">{allItemsCaption}</Dropdown.Item>
+            {this.renderAllElementsItem()}
             {this.renderDropDownItems()}
         </DropdownButton>
         );
     }
-/*
-            <a key={index} className="dropdown-item" href="#" onClick={(e)=>console.log('e.target')}>{row}</a>
 
-    render()
-    {
-        const allItemsCaption = "Все элементы";
-        return (
-        <div className="dropdown" >    
-            <button className="btn btn-light dropdown-toggle border"
-                    id="dropdownMenuButton"
-                    data-toggle="dropdown"                    
-                    aria-haspopup="true" aria-expanded="false">         
-                {allItemsCaption}                       
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" >
-                    {this.renderDropDownItems()}
-                </div>
-            </button>
-        </div>
-        );
-    }
-                    <a className="dropdown-item" href="#">{allItemsCaption}</a>
-*/
 
 }
 export default DropDownList;

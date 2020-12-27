@@ -82,11 +82,11 @@ class StorageMainPage extends React.Component{
                         <thead>
                             <tr>
                                 <th key="0">
-                                    <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} />
+                                    <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} showAllElementsItem={true} />
                                 </th>
                                 <th key="1">
                                     <InputGroup>
-                                        <Button className="btn-sm btn-danger" onClick={(e)=>this.handleClearFilterButtonClick()} disabled={!this.state.itemFilter} >
+                                        <Button className="btn-sm" onClick={(e)=>this.handleClearFilterButtonClick()} disabled={!this.state.itemFilter} >
                                             <CancelIcon />   
                                         </Button>
                                         <span style={space10}></span>

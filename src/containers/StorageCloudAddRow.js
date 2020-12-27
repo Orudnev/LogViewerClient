@@ -1,8 +1,7 @@
 import {connect} from 'react-redux';
-import * as acts from '../actions';
 import {actStoreCloudGetAllItems} from '../actions';
 import {actStoreCloudFilterItems} from '../actions';
-import storageMainPg from '../components/StorageMain';
+import AddRowPg from '../components/StorageCloudAddRow';
 
 function mapStateToProps(state)
 {
@@ -25,5 +24,5 @@ function mapDispatchToProps(dispatch)
     };
 }
 
-const cont = connect(mapStateToProps,mapDispatchToProps)(storageMainPg);
+const cont = connect(mapStateToProps,mapDispatchToProps)(AddRowPg);
 export default cont;
