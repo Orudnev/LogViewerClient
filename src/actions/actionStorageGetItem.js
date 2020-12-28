@@ -36,7 +36,7 @@ export function actStoreCloudGetAllItems(bRefresh)
     }   
 }
 
-
+//{"method":"addRow","parameters":{"FieldValues":["конт","элм"]}}
 
 export function actStoreCloudFilterItems(fltCriteria)
 {
