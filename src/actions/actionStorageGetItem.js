@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {STORECLOUD_ENDPOINTURL as url} from '../appResources'
 
 export const ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS = 'ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS';
 export const ACTTYPE_STORECLOUD_GETALLITEMS = 'ACTTYPE_STORECLOUD_GETALLITEMS';
@@ -8,9 +9,10 @@ export const ACTTYPE_STORECLOUD_UPDATECONTAINERLIST = 'ACTTYPE_STORECLOUD_UPDATE
 export const LSTORAGE_KEY = 'actStoreCloudGetAllItems';
 export function actStoreCloudGetAllItems(bRefresh)
 {
+    console.log("actStoreCloudGetAllItems()")
     if(!bRefresh)
     {
-        if(localStorage[LSTORAGE_KEY])
+        if(localStorage[LSTORAGE_KEY] && localStorage[LSTORAGE_KEY]!="undefined")
         {
             var _payload = JSON.parse(localStorage[LSTORAGE_KEY]);
             return  {
@@ -20,13 +22,17 @@ export function actStoreCloudGetAllItems(bRefresh)
         }
     }
     
-    var url = "https://script.google.com/macros/s/AKfycbyjRdA18bzdVoNSkQyeu-mbE3CfM83Qng48ynNGziMEzINAe2I/exec?method=getAllRows";
     return dispatch=>{
         dispatch({
             type: ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS
         });
-        return axios.get(url)
-        .then(response=>response.data.result)
+        var paramObj = {method:"getAllRows"};
+        var pars = {params:paramObj}
+        return axios.get(url,pars)
+        .then(response=>{
+            console.log(response.data);
+            return response.data.result;
+        })
         .then((payload)=>{
                 localStorage[LSTORAGE_KEY] = JSON.stringify(payload);
                 dispatch({
@@ -36,7 +42,6 @@ export function actStoreCloudGetAllItems(bRefresh)
     }   
 }
 
-//{"method":"addRow","parameters":{"FieldValues":["конт","элм"]}}
 
 export function actStoreCloudFilterItems(fltCriteria)
 {

@@ -23,7 +23,6 @@ class DropDownList extends React.Component{
 
     renderDropDownItems()
     {
-        console.log(this.props.containers);
         return this.props.containers.map((row,index) => {
             return(
             <Dropdown.Item eventKey={index+this.showAllItemIndexCorrection} key={index+this.showAllItemIndexCorrection} >{row}</Dropdown.Item>)
@@ -46,7 +45,6 @@ class DropDownList extends React.Component{
         var selectedItem = this.props.containers[index-this.showAllItemIndexCorrection];
         this.setState({selectedIndex:index,selectedItemStr:selectedItem});
         this.props.onItemSelected(selectedItem);
-        console.log(selectedItem);
     }
 
     renderAllElementsItem()

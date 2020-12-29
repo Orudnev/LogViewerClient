@@ -3,7 +3,8 @@ import {LSTORAGE_KEY} from '../actions/actionStorageGetItem';
 
 const defaultState = {
     Items:[],
-    Containers:[]
+    Containers:[],
+    LastAddedRow:{}
 }  
 
 function reducer(state = defaultState, action) {
@@ -19,7 +20,16 @@ function reducer(state = defaultState, action) {
                 Containers:getContainerList()
             } 
             return result;
-            break;
+        case actions.ACTTYPE_STORECLOUD_ADDROW_WAITRESPONSE:
+            console.log('ACTTYPE_STORECLOUD_ADDROW_WAITRESPONSE');
+            var result = {...state,LastAddedRow:action.payload};
+            return result;
+        case actions.ACTTYPE_STORECLOUD_ADDROW:
+            console.log('ACTTYPE_STORECLOUD_ADDROW');
+            var result = {...state,LastAddedRow:action.payload};
+            result.Items.push(result.LastAddedRow);
+            return result;
+
         default:
             return state;    
     }
@@ -27,7 +37,9 @@ function reducer(state = defaultState, action) {
 
 function getContainerList()
 {
-    var allRows = JSON.parse(localStorage[LSTORAGE_KEY]);
+    var allRowsJsonStr = localStorage[LSTORAGE_KEY];
+    if (!allRowsJsonStr || allRowsJsonStr == "undefined") return [];
+    var allRows = JSON.parse(allRowsJsonStr);
     var containers = [];
     allRows.map((itemRow)=>{
         var sr = containers.filter(cnt=>cnt==itemRow.Container);

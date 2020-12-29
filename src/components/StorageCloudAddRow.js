@@ -9,7 +9,8 @@ import {PlusIcon}  from './icons';
 import {ExitIcon}  from './icons';
 import DropdownList from './DropdownList';
 import {CancelIcon}  from './icons';
-import history from '../history'
+import history from '../history';
+
 
 
 class StorageCloudAddRow extends React.Component{
@@ -29,8 +30,13 @@ class StorageCloudAddRow extends React.Component{
         this.setState({container});
     }
 
+    handleButtonApplyClick(){
+        var values = [this.state.container,this.state.item];
+        this.props.addRow(values);        
+        this.goBack();
+    }
+
     goBack(){        
-        console.log(this.history);
         history.goBack();
     }
 
@@ -80,7 +86,7 @@ class StorageCloudAddRow extends React.Component{
                         </Button>
                     </div>
                     <div className="col text-right">
-                        <Button type='button' onClick={(e) => console.log(this.state)} variant="success">
+                        <Button type='button' onClick={(e) => this.handleButtonApplyClick()} variant="success">
                             <ApplyIcon />
                         </Button>
                     </div>

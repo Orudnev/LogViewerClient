@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
-import {actStoreCloudGetAllItems} from '../actions';
-import {actStoreCloudFilterItems} from '../actions';
-import AddRowPg from '../components/StorageCloudAddRow';
+import {actStoreCloudAddRow} from '../actions';
+import StorageCloudAddRow from '../components/StorageCloudAddRow';
 
 function mapStateToProps(state)
 {
@@ -13,16 +12,13 @@ function mapStateToProps(state)
 function mapDispatchToProps(dispatch)
 {
     return {
-        requestRows: 
-            (bRefresh) =>{
-                dispatch(actStoreCloudGetAllItems(bRefresh));
-            },
-        filterRows:
-            (fltCriteria) =>{
-                dispatch(actStoreCloudFilterItems(fltCriteria));
+        addRow: 
+            (newRowValues) =>{
+                console.log("addRow");
+                dispatch(actStoreCloudAddRow(newRowValues));
             }     
     };
 }
 
-const cont = connect(mapStateToProps,mapDispatchToProps)(AddRowPg);
+const cont = connect(mapStateToProps,mapDispatchToProps)(StorageCloudAddRow);
 export default cont;
