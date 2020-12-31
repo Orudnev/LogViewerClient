@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDataGrid from 'react-data-grid';
 import { Link } from 'react-router-dom';
-import {Table} from 'react-bootstrap';
+import {Container, Table} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import {InputGroup} from 'react-bootstrap';
 import {FormControl} from 'react-bootstrap';
@@ -13,6 +13,11 @@ import DropdownList from './DropdownList';
 const space10 = {
    width: "10px"
 };
+
+const columns = [
+    {key:'Container',name:'Container'},
+    {key:'Item',name:'Item'},
+];
 
 class StorageMainPage extends React.Component{
     constructor(props){
@@ -66,43 +71,44 @@ class StorageMainPage extends React.Component{
     }
  
     render() {
-        if(this.props.CloudStore.Items != null)
+        if(this.props.CloudStore.Items != null && this.props.CloudStore.Items.length>0)
         {
+            console.log(this.props);
             return(
                     <div>
-                    <div className="btn-group" role="group" >
-                        <Link to="/storecloud/addrow">
-                            <Button type='button' >
-                                <PlusIcon />
+                        <div className="btn-group" role="group" >
+                            <Link to="/storecloud/addrow">
+                                <Button type='button' >
+                                    <PlusIcon />
+                                </Button>
+                            </Link>
+                            <span style={space10}></span>
+                            <Button type='button' onClick={(e) => this.handleRefreshButtonClick(e)}>
+                                <RefreshIcon />
                             </Button>
-                        </Link>
-                        <span style={space10}></span>
-                        <Button type='button' onClick={(e) => this.handleRefreshButtonClick(e)}>
-                            <RefreshIcon />
-                        </Button>
-                    </div>
+                        </div>
+                    
+                        <div className="row" >
+                            <div className="col-5">
+                                <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} showAllElementsItem={true} />
+                            </div>
+                            <div className="col">
+                                <InputGroup>
+                                    <Button className="btn-sm" onClick={(e)=>this.handleClearFilterButtonClick()} disabled={!this.state.itemFilter} >
+                                        <CancelIcon />   
+                                    </Button>
+                                    <span style={space10}></span>
+                                    <FormControl placeholder="filter" aria-describedby="basic-addon1" onChange={(e)=>this.handleChangeFilter(e)} value={this.state.itemFilter} />
+                                </InputGroup>
+                            </div>    
+                        </div>    
 
-                    <Table id='tblItems' striped bordered hover size='sm'>
-                        <thead>
-                            <tr>
-                                <th key="0">
-                                    <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} showAllElementsItem={true} />
-                                </th>
-                                <th key="1">
-                                    <InputGroup>
-                                        <Button className="btn-sm" onClick={(e)=>this.handleClearFilterButtonClick()} disabled={!this.state.itemFilter} >
-                                            <CancelIcon />   
-                                        </Button>
-                                        <span style={space10}></span>
-                                        <FormControl placeholder="filter" aria-describedby="basic-addon1" onChange={(e)=>this.handleChangeFilter(e)} value={this.state.itemFilter} />
-                                    </InputGroup>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.renderTableData()}
-                        </tbody>
-                    </Table>
+                        <ReactDataGrid 
+                            columns={columns}
+                            rowGetter={i=>this.props.CloudStore.Items[i]} 
+                            rowsCount={this.props.CloudStore.Items.length}
+                            minHeight={500}
+                        />
                     </div>
                 );
         } else

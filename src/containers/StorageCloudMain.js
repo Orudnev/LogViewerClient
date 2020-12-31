@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import * as acts from '../actions';
 import {actStoreCloudGetAllItems} from '../actions';
 import {actStoreCloudFilterItems} from '../actions';
-import storageMainPg from '../components/StorageCloudMain';
+import storageMainPg from '../components/SrorageCloudMainNew';
 
 function mapStateToProps(state)
 {
