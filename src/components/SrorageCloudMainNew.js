@@ -15,8 +15,17 @@ const space10 = {
 };
 
 const columns = [
-    {key:'Container',name:'Container'},
-    {key:'Item',name:'Item'},
+    {
+        key:'Container',
+        name:'Container',
+        resizable: true,
+        width:100
+    },
+    {
+        key:'Item',
+        name:'Item',
+        resizable: true,
+    },
 ];
 
 class StorageMainPage extends React.Component{
@@ -25,24 +34,21 @@ class StorageMainPage extends React.Component{
         this.state = {
                 containerFilter:null,
                 itemFilter:"",
-                selectedRowId:-1
+                dataGrid:null,
+                newRowId:-1
         } 
     }
 
     componentDidMount(){
+        console.log(this.props.CloudStore.LastAddedRow);
         this.props.requestRows(false);
     }
 
-    renderTableData(){
-            return this.props.CloudStore.Items.map((row,index) => {
-                let {Id,Container,Item} = row;
-                var selected = (this.state.selectedRowId == Id)?"table-danger":"";
-                return(
-                    <tr key={Id} onClick={()=>{console.log(this.state.selectedRowId);this.setState({selectedRowId:Id});}} className={selected}>
-                        <td>{Container}</td>
-                        <td>{Item}</td>
-                    </tr>);
-            });
+    componentDidUpdate(prevProps,prevState){
+        if(this.props.CloudStore.LastAddedRow)
+        {
+            this.scrollToRow(this.props.CloudStore.LastAddedRow.Id); 
+        } 
     }
 
     handleRefreshButtonClick(){
@@ -69,11 +75,19 @@ class StorageMainPage extends React.Component{
         var fltCriteria = {itemFilter:this.state.itemFilter,containerFilter:container}; 
         this.props.filterRows(fltCriteria);        
     }
+
+    scrollToRow(rowIndex) {
+        console.log('scroll'+rowIndex);
+        var top = this.dataGrid.getRowOffsetHeight() * rowIndex;
+        var gridCanvas = this.dataGrid.getDataGridDOMNode().querySelector('.react-grid-Canvas');
+        gridCanvas.scrollTop = top;
+        this.dataGrid.selectCell({ rowIdx: rowIndex , idx: 1});
+    }
  
     render() {
         if(this.props.CloudStore.Items != null && this.props.CloudStore.Items.length>0)
         {
-            console.log(this.props);
+            
             return(
                     <div>
                         <div className="btn-group" role="group" >
@@ -108,6 +122,7 @@ class StorageMainPage extends React.Component{
                             rowGetter={i=>this.props.CloudStore.Items[i]} 
                             rowsCount={this.props.CloudStore.Items.length}
                             minHeight={500}
+                            ref={(g)=>this.dataGrid=g}
                         />
                     </div>
                 );

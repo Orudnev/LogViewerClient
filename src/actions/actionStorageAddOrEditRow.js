@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {STORECLOUD_ENDPOINTURL as url} from '../appResources'
+import {STORECLOUD_ENDPOINTURL as url} from '../appResources';
 
 export const ACTTYPE_STORECLOUD_ADDROW_WAITRESPONSE = 'ACTTYPE_STORECLOUD_ADDROW_WAITRESPONSE';
 export const ACTTYPE_STORECLOUD_ADDROW = 'ACTTYPE_STORECLOUD_ADDROW';
@@ -21,7 +21,7 @@ export function actStoreCloudAddRow(valuesArray)
         .then(response=>{
                return response.data.result
             })
-        .then((payload)=>{
+        .then((payload)=>{                
                 dispatch({
                 type:ACTTYPE_STORECLOUD_ADDROW,
                 payload});

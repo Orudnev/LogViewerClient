@@ -1,5 +1,5 @@
 import * as actions from '../actions';
-import {LSTORAGE_KEY} from '../actions/actionStorageGetItem';
+import {LSTORAGE_KEY} from '../appResources';
 
 const defaultState = {
     Items:[],
@@ -28,6 +28,10 @@ function reducer(state = defaultState, action) {
             console.log('ACTTYPE_STORECLOUD_ADDROW');
             var result = {...state,LastAddedRow:action.payload};
             result.Items.push(result.LastAddedRow);
+            console.log("AddRow, reducer: ");
+            console.log(result);
+            localStorage[LSTORAGE_KEY] = JSON.stringify(result.Items);
+
             return result;
 
         default:

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import {STORECLOUD_ENDPOINTURL as url} from '../appResources'
+import {LSTORAGE_KEY} from '../appResources';
 
 export const ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS = 'ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS';
 export const ACTTYPE_STORECLOUD_GETALLITEMS = 'ACTTYPE_STORECLOUD_GETALLITEMS';
 export const ACTTYPE_STORECLOUD_FILTERITEMS = 'ACTTYPE_STORECLOUD_FILTERITEMS';
 export const ACTTYPE_STORECLOUD_UPDATECONTAINERLIST = 'ACTTYPE_STORECLOUD_UPDATECONTAINERLIST';
 
-export const LSTORAGE_KEY = 'actStoreCloudGetAllItems';
+
 export function actStoreCloudGetAllItems(bRefresh)
 {
     console.log("actStoreCloudGetAllItems()")
