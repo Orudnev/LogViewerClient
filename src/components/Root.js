@@ -10,31 +10,52 @@ import { Link } from 'react-router-dom'
 import StorageCloudContainer from '../containers/StorageCloudMain';
 import StorageCloudAddRow from '../containers/StorageCloudAddRow';
 
+export const routePath = {
+  root:'/',
+  root_sb:'/sb',
+  storeCloud:'/storeCloud',
+  storeCloud_sb:'/sb/storeCloud',
+  storeСloud_editrow:'/storeCloud/editrow',
+  storeСloud_addrow:'/storeCloud/addrow',
+
+}
 
 const routes = [
-  { path: '/',
+  { path: routePath.root,
     exact: true,    
-    sidebar: () => <div>home sidebar!</div>,
     main: () => <div>Home page</div>
   },
-  { path: '/storecloud',
+  { path: routePath.storeCloud,
     exact:true,
-    sidebar: () => <div>bubblegum sidebar!</div>,
     main: () => <StorageCloudContainer/>
   },
-  {
-    path:'/storecloud/editrow',
+  { path:routePath.storeСloud_editrow,
     main:()=><h2>Edit table row</h2> 
   },
   {
-    path:'/storecloud/addrow',
+    path:routePath.storeСloud_addrow,
     main:()=><StorageCloudAddRow/> 
   },
-  { path: '/shoelaces',
-    sidebar: () => <div>shoelaces sidebar!</div>,
-    main: () => <h2>Shoelaces main</h2>
-  }
 ]
+
+const routes_sb = [
+  { path: routePath.root_sb,
+    exact: true,    
+    main: () => <div>Home page</div>
+  },
+  { path: routePath.storeCloud_sb,
+    exact:true,
+    main: () => <StorageCloudContainer/>
+  },
+  { path:routePath.storeСloud_editrow,
+    main:()=><h2>Edit table row</h2> 
+  },
+  {
+    path:routePath.storeСloud_addrow,
+    main:()=><StorageCloudAddRow/> 
+  },
+]
+
 
 const styles = {
   background: ""
@@ -57,44 +78,53 @@ const Root = ({ store }) => (
           width: '40%',
           background: '#fFFFFF'
         }}>
-          <SplitPane
-                split="vertical"
-                minSize={10}
-                defaultSize={80}
-                resizerStyle={styles1}
-          > 
-          <div>
-              <Route exact path="/" component = {() => (
-                  <ul style={{ listStyleType: 'none', padding: 0 }}>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/storecloud">StoreCloud</Link></li>
-                    <li><Link to="/shoelaces">Shoelaces</Link></li>
-                  </ul>)}
-                  />
-              <Route path="/storecloud" component = {() => (
+          <Route path="/sb">
+            <SplitPane
+                  split="vertical"
+                  minSize={10}
+                  defaultSize={100}
+                  resizerStyle={styles1}
+            > 
+            <div>
               <ul style={{ listStyleType: 'none', padding: 0 }}>
-                <li><Link to="/">Home1</Link></li>
-                <li><Link to="/shoelaces">Shoelaces</Link></li>
-              </ul>)}
-              />
-              <Route path="/shoelaces" component = {() => (
+                  <li><Link to={routePath.root_sb}>Root sb</Link></li>
+                  <li><Link to={routePath.root}>Root</Link></li>
+                  <li><Link to={routePath.storeCloud_sb}>StoreCloud sb</Link></li>
+                  <li><Link to={routePath.storeCloud}>StoreCloud</Link></li>
+                  <li><Link to={routePath.storeСloud_addrow}>Add row</Link></li>
+                  <li><Link to={routePath.storeСloud_editrow}>Edit row</Link></li>
+              </ul>
+            </div>
+            <div>
+              {routes_sb.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.main}
+                />
+              ))}
+            </div>
+          </SplitPane>
+          </Route>
+          <Route path="/" exact>
               <ul style={{ listStyleType: 'none', padding: 0 }}>
-                <li><Link to="/">Home1</Link></li>
-                <li><Link to="/shoelaces">Shoelaces</Link></li>
-              </ul>)}
-              />
-          </div>
-          <div>
+                  <li><Link to={routePath.root_sb}>Root sb</Link></li>
+                  <li><Link to={routePath.root}>Root</Link></li>
+                  <li><Link to={routePath.storeCloud_sb}>StoreCloud sb</Link></li>
+                  <li><Link to={routePath.storeCloud}>StoreCloud</Link></li>
+                  <li><Link to={routePath.storeСloud_addrow}>Add row</Link></li>
+                  <li><Link to={routePath.storeСloud_editrow}>Edit row</Link></li>
+              </ul>
+          </Route>
           {routes.map((route) => (
-            <Route
-              key={route.path}
-              path={route.path}
-              exact={route.exact}
-              component={route.main}
-            />
-          ))}
-          </div>
-        </SplitPane>
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.main}
+                />
+              ))}
         </div>
       </div>           
     </Router>

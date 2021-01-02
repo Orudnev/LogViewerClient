@@ -9,6 +9,7 @@ import {CancelIcon}  from './icons';
 import {PlusIcon}  from './icons';
 import {RefreshIcon}  from './icons';
 import DropdownList from './DropdownList';
+import {routePath} from './Root'
 
 const space10 = {
    width: "10px"
@@ -91,7 +92,7 @@ class StorageMainPage extends React.Component{
             return(
                     <div>
                         <div className="btn-group" role="group" >
-                            <Link to="/storecloud/addrow">
+                            <Link to={routePath.storeСloud_addrow}>
                                 <Button type='button' >
                                     <PlusIcon />
                                 </Button>
