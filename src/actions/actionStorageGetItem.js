@@ -49,9 +49,15 @@ export function actStoreCloudFilterItems(fltCriteria)
     if(fltCriteria.itemFilter || fltCriteria.containerFilter){
         var allRows = JSON.parse(localStorage[LSTORAGE_KEY]);
         var payload = allRows.filter((row)=>{
-            var b1 = true; var b2 = true;
-            if (fltCriteria.itemFilter) b1 = row.Item.toLowerCase().includes(fltCriteria.itemFilter.toLowerCase());
-            if (fltCriteria.containerFilter) b2 = row.Container == fltCriteria.containerFilter;
+            var b1 = true; var b2 = true;            
+            if (fltCriteria.itemFilter){
+             console.log(fltCriteria.itemFilter);   
+             console.log(row.Item);   
+             b1 = row.Item.toLowerCase().includes(fltCriteria.itemFilter.toLowerCase());
+            }
+            if (fltCriteria.containerFilter){ 
+                b2 = row.Container == fltCriteria.containerFilter;
+            }
             return b1 && b2;     
         });
         return  {
