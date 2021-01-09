@@ -15,6 +15,9 @@ const space10 = {
    width: "10px"
 };
 
+const pageWidth = {
+    width:"96vw"
+}
 const columns = [
     {
         key:'Container',
@@ -90,7 +93,7 @@ class StorageMainPage extends React.Component{
         {
             
             return(
-                    <div>
+                    <div style = {pageWidth}>
                         <div className="btn-group" role="group" >
                             <Link to={routePath.storeСloud_addrow}>
                                 <Button type='button' >
