@@ -4,36 +4,34 @@ import {LSTORAGE_KEY} from '../appResources';
 const defaultState = {
     Items:[],
     Containers:[],
-    LastAddedRow:{}
+    LastAddedRow:{},
+    SelectedRowIndex:-1
 }  
 
 function reducer(state = defaultState, action) {
     switch (action.type){
         case actions.ACTTYPE_STORECLOUD_REQUEST_GETALLITEMS:
-            return {
-                Items:null,
+            var result = {...state,Items:null,
                 Containers:[]
             } 
+            return result;
         case actions.ACTTYPE_STORECLOUD_GETALLITEMS:
-           var result = { 
+           var result = { ...state,
                 Items:action.payload,
                 Containers:getContainerList()
             } 
             return result;
         case actions.ACTTYPE_STORECLOUD_ADDROW_WAITRESPONSE:
-            console.log('ACTTYPE_STORECLOUD_ADDROW_WAITRESPONSE');
             var result = {...state,LastAddedRow:action.payload};
             return result;
         case actions.ACTTYPE_STORECLOUD_ADDROW:
-            console.log('ACTTYPE_STORECLOUD_ADDROW');
             var result = {...state,LastAddedRow:action.payload};
             result.Items.push(result.LastAddedRow);
-            console.log("AddRow, reducer: ");
-            console.log(result);
             localStorage[LSTORAGE_KEY] = JSON.stringify(result.Items);
-
             return result;
-
+        case actions.ACTTYPE_STORECLOUD_SELECTROW:
+            var result = {...state,SelectedRowIndex:action.payload};
+            return result;
         default:
             return state;    
     }

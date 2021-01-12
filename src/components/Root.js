@@ -9,6 +9,9 @@ import App from '../App'
 import { Link } from 'react-router-dom'
 import StorageCloudContainer from '../containers/StorageCloudMain';
 import StorageCloudAddRow from '../containers/StorageCloudAddRow';
+import StorageCloudEditRow from '../containers/StorageCloudEditRow';
+import {Button} from 'react-bootstrap';
+import {GasolineIcon}  from './icons';
 
 export const routePath = {
   root:'/',
@@ -30,7 +33,7 @@ const routes = [
     main: () => <StorageCloudContainer/>
   },
   { path:routePath.storeСloud_editrow,
-    main:()=><h2>Edit table row</h2> 
+    main:() => <StorageCloudEditRow/> 
   },
   {
     path:routePath.storeСloud_addrow,
@@ -93,6 +96,9 @@ const Root = ({ store }) => (
                   <li><Link to={routePath.storeCloud}>StoreCloud</Link></li>
                   <li><Link to={routePath.storeСloud_addrow}>Add row</Link></li>
                   <li><Link to={routePath.storeСloud_editrow}>Edit row</Link></li>
+                  <Button type='button' >
+                      <GasolineIcon />
+                  </Button>
               </ul>
             </div>
             <div>

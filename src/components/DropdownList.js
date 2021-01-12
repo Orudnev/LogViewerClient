@@ -10,9 +10,14 @@ class DropDownList extends React.Component{
         super(props);
         this.showAllItemIndexCorrection = 0;
         if(this.props.showAllElementsItem) this.showAllItemIndexCorrection = 1;
+        var selItem = "";
+        if(this.props.selectedItemStr){
+            selItem = this.props.selectedItemStr;
+        }
+        console.log('ctor');
         this.state = {
             selectedIndex:props.showAllElementsItem == 1?0:-1,
-            selectedItemStr: props.showAllElementsItem == 1?allItemsCaption:""
+            selectedItemStr: props.showAllElementsItem ?allItemsCaption:selItem
         } 
     }
 
@@ -59,6 +64,7 @@ class DropDownList extends React.Component{
 
     render()
     {
+        console.log(this.state);
         return (
         <DropdownButton variant="light" className="border"
         title= {this.state.selectedItemStr}

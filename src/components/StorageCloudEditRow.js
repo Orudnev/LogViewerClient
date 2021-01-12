@@ -1,8 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import {Table} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
-import {InputGroup} from 'react-bootstrap';
 import {FormControl} from 'react-bootstrap';
 import {ApplyIcon}  from './icons';
 import {PlusIcon}  from './icons';
@@ -15,9 +12,10 @@ const pageWidth = {
     width:"90vw"
 }
 
-class StorageCloudAddRow extends React.Component{
+class StorageCloudEditRow extends React.Component{
     constructor(props){
-        super(props);
+          super(props);
+          console.log(props);
         this.state = {
             container:"",
             item:"",
@@ -43,11 +41,16 @@ class StorageCloudAddRow extends React.Component{
     }
 
     renderDropDown(){
+        if(this.props.CloudStore.Items.length==0) {
+            this.goBack();
+            return;
+        }        
+        var selCont = this.props.CloudStore.Items[this.props.CloudStore.SelectedRowIndex].Container;
         if(this.state.selectFromDropDown){
             return(
                 <div className="row" >
                     <div className="col-9">
-                        <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} />
+                        <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} selectedItemStr={selCont} />
                     </div>
                     <div className="col">
                         <Button type='button' onClick={(e) => this.setState({selectFromDropDown:false})} variant="success">
@@ -79,6 +82,10 @@ class StorageCloudAddRow extends React.Component{
 
     render()
     {
+        var ItemStr = "";
+        if(this.props.CloudStore.Items.length>0){
+            ItemStr = this.props.CloudStore.Items[this.props.CloudStore.SelectedRowIndex].Item;
+        } 
         return (
             <div style = {pageWidth}>
                 <div className="row">
@@ -103,7 +110,7 @@ class StorageCloudAddRow extends React.Component{
                             placeholder="название элемента"
                             onChange={(e)=>this.setState({item:e.target.value})} 
                             aria-describedby="basic-addon1" 
-                            value={this.state.itemFilter} />
+                            value={ItemStr} />
                     </div>
                 </div>    
             </div>            
@@ -112,4 +119,4 @@ class StorageCloudAddRow extends React.Component{
 
 
 }
-export default StorageCloudAddRow;
+export default StorageCloudEditRow;
