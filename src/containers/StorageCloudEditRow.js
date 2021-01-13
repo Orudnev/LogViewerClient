@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {actStoreCloudAddRow} from '../actions';
+import {actStoreCloudUpdateRow} from '../actions';
 
 import StorageCloudEditRow from '../components/StorageCloudEditRow';
 
@@ -13,9 +13,9 @@ function mapStateToProps(state)
 function mapDispatchToProps(dispatch)
 {
     return {
-        addRow: 
+        updateRow: 
             (newRowValues) =>{
-                dispatch(actStoreCloudAddRow(newRowValues));
+                dispatch(actStoreCloudUpdateRow(newRowValues));
             },
     };
 }

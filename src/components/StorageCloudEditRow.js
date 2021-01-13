@@ -15,10 +15,16 @@ const pageWidth = {
 class StorageCloudEditRow extends React.Component{
     constructor(props){
           super(props);
-          console.log(props);
+        var itemStr = "";  
+        var selCont = "";
+        if(props.CloudStore.Items.length>0){
+            itemStr = props.CloudStore.Items[props.CloudStore.SelectedRowIndex].Item;
+            selCont = props.CloudStore.Items[props.CloudStore.SelectedRowIndex].Container;            
+        }      
+    
         this.state = {
-            container:"",
-            item:"",
+            container:selCont,
+            item:itemStr,
             selectFromDropDown:true
         } 
     }
@@ -31,8 +37,8 @@ class StorageCloudEditRow extends React.Component{
     }
 
     handleButtonApplyClick(){
-        var values = [this.state.container,this.state.item];
-        this.props.addRow(values);        
+        var values = [this.props.CloudStore.SelectedRowIndex,this.state.container,this.state.item];
+        this.props.updateRow(values);        
         this.goBack();
     }
 
@@ -45,12 +51,13 @@ class StorageCloudEditRow extends React.Component{
             this.goBack();
             return;
         }        
-        var selCont = this.props.CloudStore.Items[this.props.CloudStore.SelectedRowIndex].Container;
         if(this.state.selectFromDropDown){
             return(
                 <div className="row" >
                     <div className="col-9">
-                        <DropdownList containers={this.props.CloudStore.Containers} onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} selectedItemStr={selCont} />
+                        <DropdownList   containers={this.props.CloudStore.Containers} 
+                                        onItemSelected={(cont)=>this.handleContainerFilterChange(cont)} 
+                                        selectedItemStr={this.state.container} />
                     </div>
                     <div className="col">
                         <Button type='button' onClick={(e) => this.setState({selectFromDropDown:false})} variant="success">
@@ -81,11 +88,7 @@ class StorageCloudEditRow extends React.Component{
 
 
     render()
-    {
-        var ItemStr = "";
-        if(this.props.CloudStore.Items.length>0){
-            ItemStr = this.props.CloudStore.Items[this.props.CloudStore.SelectedRowIndex].Item;
-        } 
+    {        
         return (
             <div style = {pageWidth}>
                 <div className="row">
@@ -110,7 +113,7 @@ class StorageCloudEditRow extends React.Component{
                             placeholder="название элемента"
                             onChange={(e)=>this.setState({item:e.target.value})} 
                             aria-describedby="basic-addon1" 
-                            value={ItemStr} />
+                            value={this.state.item} />
                     </div>
                 </div>    
             </div>            
