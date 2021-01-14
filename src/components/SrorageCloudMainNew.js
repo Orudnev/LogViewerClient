@@ -42,6 +42,8 @@ class StorageMainPage extends React.Component{
                 itemFilter:"",
                 dataGrid:null,
                 newRowId:-1,
+                hasScrolledToLastRow:false,
+                lastSelectedRowIndex:0
         } 
     }
 
@@ -51,10 +53,14 @@ class StorageMainPage extends React.Component{
     }
 
     componentDidUpdate(prevProps,prevState){
-        if(this.props.CloudStore.LastAddedRow)
+        if(this.props.CloudStore.LastAddedRow && !this.state.hasScrolledToLastRow)
         {
             this.scrollToRow(this.props.CloudStore.LastAddedRow.Id); 
+            this.setState({hasScrolledToLastRow:true});
         } 
+        if(this.state.lastSelectedRowIndex != this.props.CloudStore.SelectedRowIndex){
+            this.scrollToRow(this.props.CloudStore.SelectedRowIndex);
+        }
     }
 
     handleRefreshButtonClick(){
@@ -83,7 +89,6 @@ class StorageMainPage extends React.Component{
     }
 
     scrollToRow(rowIndex) {
-        console.log('scroll'+rowIndex);
         var top = this.dataGrid.getRowOffsetHeight() * rowIndex;
         var gridCanvas = this.dataGrid.getDataGridDOMNode().querySelector('.react-grid-Canvas');
         gridCanvas.scrollTop = top;
@@ -91,6 +96,7 @@ class StorageMainPage extends React.Component{
     }
 
     onCellSelected(sel){
+        this.setState({lastSelectedRowIndex:sel.rowIdx});
         this.props.selectRow(sel.rowIdx);
     }
 

@@ -29,6 +29,12 @@ function reducer(state = defaultState, action) {
             result.Items.push(result.LastAddedRow);
             localStorage[LSTORAGE_KEY] = JSON.stringify(result.Items);
             return result;
+        case actions.ACTTYPE_STORECLOUD_UPDATEROW:
+            var updatedRow=action.payload;
+            var result = {...state,SelectedRowIndex:updatedRow.Id};
+            result.Items[updatedRow.Id] = updatedRow;
+            localStorage[LSTORAGE_KEY] = JSON.stringify(result.Items);
+            return result;
         case actions.ACTTYPE_STORECLOUD_SELECTROW:
             var result = {...state,SelectedRowIndex:action.payload};
             return result;

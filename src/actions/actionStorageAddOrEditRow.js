@@ -47,7 +47,7 @@ export function actStoreCloudUpdateRow(valuesArray){
         .then(response=>{
                return response.data.result
             })
-        .then((payload)=>{                
+        .then((payload)=>{  
                 dispatch({
                 type:ACTTYPE_STORECLOUD_UPDATEROW,
                 payload});
